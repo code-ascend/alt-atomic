@@ -1,31 +1,35 @@
-name: Build Base image with Podman/Buildah
+name: Build Base image with Podman/Buildah (zstd:chunked)
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout репозитория
         uses: actions/checkout@v4
 
-      - name: Install Podman and Buildah
+      - name: Установка Podman и Buildah
         run: |
           sudo apt-get update
           sudo apt-get -y install podman buildah
+          # Создаем каталог для переопределения настроек контейнеров
+          sudo install -dm 0755 -o 0 -g 0 /etc/containers/containers.conf.d/
+          # Указываем, что по умолчанию следует использовать формат сжатия zstd:chunked
+          echo 'compression_format = "zstd:chunked"' | sudo tee /etc/containers/containers.conf.d/compress-zstd-chunked.conf
 
-      - name: Login to GitHub Container Registry using Podman
+      - name: Логин в GitHub Container Registry через Podman
         run: |
           podman login ghcr.io -u "${{ github.repository_owner }}" -p "${{ secrets.GITHUB_TOKEN }}"
 
-      - name: Build image using Buildah with zstd:chunked compression
+      - name: Сборка образа с помощью Buildah
         run: |
-          buildah bud --compression-format=zstd:chunked -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:base .
+          buildah bud -t ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:base .
 
-      - name: Push image using Podman
+      - name: Публикация образа с использованием zstd:chunked (через Podman)
         run: |
-          podman push ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:base
+          podman push --compression-format=zstd:chunked ghcr.io/${{ github.repository_owner }}/${{ github.event.repository.name }}:base
