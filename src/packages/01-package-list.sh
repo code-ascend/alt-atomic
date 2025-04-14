@@ -133,18 +133,18 @@ NETWORK_PRINT_PACKAGES=(
   wsdd
 )
 
-apt-get install -y \
-  "${BASIC_PACKAGES[@]}" \
-  "${ZRAM_PACKAGES[@]}" \
-  "${GNOME_SESSION_PACKAGES[@]}" \
-  "${GNOME_SHELL_PACKAGES[@]}" \
-  "${GNOME_DESKTOP_APPS[@]}" \
-  "${GNOME_THEMES[@]}" \
-  "${NAUTILUS_PACKAGES[@]}" \
-  "${MISC_APPS[@]}" \
-  "${DRIVERS[@]}" \
-  "${WAYLAND_QT[@]}" \
-  "${AUDIO_PACKAGES[@]}" \
-  "${NETWORK_PRINT_PACKAGES[@]}"
+#apt-get install -y \
+#  "${BASIC_PACKAGES[@]}" \
+#  "${ZRAM_PACKAGES[@]}" \
+#  "${GNOME_SESSION_PACKAGES[@]}" \
+#  "${GNOME_SHELL_PACKAGES[@]}" \
+#  "${GNOME_DESKTOP_APPS[@]}" \
+#  "${GNOME_THEMES[@]}" \
+#  "${NAUTILUS_PACKAGES[@]}" \
+#  "${MISC_APPS[@]}" \
+#  "${DRIVERS[@]}" \
+#  "${WAYLAND_QT[@]}" \
+#  "${AUDIO_PACKAGES[@]}" \
+#  "${NETWORK_PRINT_PACKAGES[@]}"
 
 echo "::endgroup::"

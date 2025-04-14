@@ -13,4 +13,6 @@ WORKDIR /
 # Помечаем образ как bootc совместимый
 LABEL containers.bootc=1
 
+LABEL org.opencontainers.image.annotations="zstd:chunked"
+
 CMD ["/sbin/init"]

@@ -1,9 +1,0 @@
-FROM ghcr.io/code-ascend/alt-atomic:base
-
-RUN apt-get update && \
-    apt-get dist-upgrade -y && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir /var/lib/apt/lists/partial \
-    --mount=type=bind,source=./src,target=/src \
-    /src/make/atomic-actions.sh
